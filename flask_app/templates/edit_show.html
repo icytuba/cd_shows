@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>TV Shows</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light mb-4">
+        <h1 class="navbar-brand pl-4">TV Shows!</h1>
+        <ul class="navbar-nav ml-auto list-group-horizontal">
+            <li class="nav-item mr-2">
+                <a class="btn btn-info" href="/shows">TV Shows</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-outline-dark" href="/logout">Log Out</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h4>Edit {{ show.title }}</h4>
+        {% with messages = get_flashed_messages(category_filter=["show"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                <p class="text-danger mb-0">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="/edit/process/{{ show.id }}" method="post">
+            <div class="form-group">
+                <label for="title" class="col-form-label">Title:</label>
+                <input type="text" name="title" class="form-control" value="{{ show.title }}">
+            </div>
+            <div class="form-group">
+                <label for="network" class="col-form-label">Network:</label>
+                <input type="text" name="network" class="form-control" value="{{ show.network }}">
+            </div>
+            <div class="form-group">
+                <label for="release_date" class="col-form-label">Release Date:</label>
+                <input type="date" name="release_date" class="form-control" value="{{ show.release_date }}">
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea name="description" cols="30" rows="3" class="form-control textarea">{{ show.description }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-secondary">Update</button>
+        </form>
+    </div>
+</body>
+</html>
